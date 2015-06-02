@@ -1,0 +1,5 @@
+com\ccigmall\beans\Action.class
+com\ccigmall\controller\BaseController.class
+com\ccigmall\services\IGenerateCodeServices.class
+com\ccigmall\beans\Page.class
+com\ccigmall\beans\Step.class

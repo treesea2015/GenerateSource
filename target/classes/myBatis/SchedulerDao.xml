@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ccigmall.dao.SchedulerDao">
+    <select id="countAll" resultType="int">  <!-- 查询表中记录总数 -->
+        select count(*) s from scheduler;
+    </select>
+    
+    <select id="selectAll" resultType="com.ccigmall.beans.Scheduler">    <!-- 查询表中的所有定时任务 -->
+        select * from scheduler order by scheduler_name asc
+    </select>
+    <select id="selectMaxId" resultType="int">    <!-- 查询表中的所有定时任务 -->
+	SELECT 
+		case 
+			when ISNULL(MAX(scheduler_id)) THEN 0 
+			ELSE MAX(scheduler_id)+1 end id
+	FROM scheduler;    
+	</select>
+    
+    <insert id="insert" parameterType="com.ccigmall.beans.Scheduler">    <!-- 向数据库中插入定时任务 -->
+        insert into scheduler(scheduler_id,scheduler_name,scheduler_bat,startTime) values(#{scheduler_id},#{scheduler_name},#{scheduler_bat},#{startTime})
+    </insert>
+    
+    <update id="update" parameterType="com.ccigmall.beans.Scheduler">     <!-- 更新库中的定时任务 -->
+        update scheduler set scheduler_id=#{scheduler_id},scheduler_name=#{scheduler_name},scheduler_bat=#{scheduler_bat},startTime=#{startTime} where scheduler_name=#{scheduler_name}
+    </update>
+    
+    <delete id="delete" parameterType="String">    <!-- 删除定时任务 -->
+        delete from scheduler where scheduler_id=#{scheduler_id}
+    </delete>
+    
+    <select id="findBySchedulerName" parameterType="String" resultType="com.ccigmall.beans.Scheduler"> <!-- 根据定时任务名查找定时任务 -->
+        select * from scheduler where scheduler_name=#{scheduler_name}
+    </select>
+    
+     <select id="findById" parameterType="int" resultType="String"> <!-- 根据定时任务名查找定时任务 -->
+        select scheduler_bat from scheduler where scheduler_id=#{scheduler_id}
+    </select>
+</mapper>

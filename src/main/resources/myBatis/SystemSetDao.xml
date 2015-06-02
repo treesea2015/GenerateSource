@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ccigmall.dao.SystemSetDao">
+     <insert id="insert" parameterType="com.ccigmall.beans.SystemSet">    <!-- 向数据库中插入定时任务 -->
+        insert into systemset(systemset_bat) values(#{systemset_bat})
+    </insert>
+    <update id="update" parameterType="com.ccigmall.beans.SystemSet">     <!-- 更新库中的定时任务 -->
+        update systemset set systemset_bat=#{systemset_bat} where systemset_id=#{systemset_id}
+    </update>
+      <select id="select" resultType="com.ccigmall.beans.SystemSet">    <!-- 查询表中的所有定时任务 -->
+        select * from systemset 
+    </select>
+     <select id="selectMaxId" resultType="int">    <!-- 查询表中的所有定时任务 -->
+	SELECT 
+		case 
+			when ISNULL(MAX(systemset_id)) THEN 0 
+			ELSE MAX(systemset_id)+1 end id
+	FROM systemset;    
+	</select>
+</mapper>
